@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang='en'>
+		<head>
+			<meta charset="UTF-8">
+			<title>Vue</title>
+			<link rel='stylesheet' href='main.css'>
+		</head>
+		<body>
+			<div id='shopping-list'>
+				<h1 class='main-header'>{{header.toUpperCase()}}</h1>
+				<div class='input-container'>
+					<input 	v-model='newItem' type='text' @keyup.enter='saveItem' placeholder='Add an item'></input>
+					<button class="button add-button" v-if="state === 'edit'" @click="changeState('default')">Add item</button>
+					<button class="button cancel-button" v-else @click="changeState('edit')">Cancel</button>
+					<button class="button save-button" v-if="state === 'default'" v-bind:disabled="newItem.length === 0" @click='saveItem'>Save item</button>
+				</div>
+				<ul class='main-list'>
+					<li
+						class='main-list-item' 
+						v-for="item in reversedItems"
+						style="display: flex"
+						:class="[item.purchased ? 'strikeout' : '', item.highPriority ? 'priority' : '']"
+					>
+						<p>{{item.label}}</p>
+						<div class="main-list-item--clickable-container">
+						<img src='./img/remove.png' class="icon delete-item-icon" @click="deleteItem(item)" />
+						<img src="./img/purchased.png" class="icon toggle-purchase-icon" @click="togglePurchased(item)" />
+						</div>
+					</li>
+				</ul>
+				<p v-if="items.length === 0" >There is no item</p>
+			</div>
+			
+			
+			<script src='https://unpkg.com/vue@2'></script>
+			
+			<script>
+			
+				const removeItem = (arr, item) => {return arr.filter((i) => {return i !== item})}
+
+			
+				var shoppingList = new Vue({
+					el: '#shopping-list',
+					data: {
+						state: 'default',
+						header: 'shopping list app',
+						items: [
+							{
+								label: '10 potatos',
+								purchased: false,
+								highPriority: false
+							},
+							{
+								label: '2 apples',
+								purchased: false,
+								highPriority: false
+							},
+							{
+								label: 'milk',
+								purchased: false,
+								highPriority: false
+							},
+							
+						],
+						newItem: 'new Item',
+					},
+					computed: {
+						reversedItems() {return this.items.slice(0).reverse()}
+					
+					},
+					methods: {
+						saveItem: function () {
+							this.items.push({
+								label: this.newItem,
+								purchased: false,
+								highPriority: false
+							});
+							this.newItem = ''
+						},
+						changeState: function(state) {
+							this.state = state
+						},
+						togglePurchased: function(item) {
+							item.purchased = !item.purchased
+						},
+						deleteItem: function(item) {
+							this.items = removeItem(this.items, item)
+						}
+					}
+				})
+			</script>
+		</body>
+</html>

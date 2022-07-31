@@ -1,0 +1,38 @@
+:root {
+	--bg: #E0FBFC,
+}
+
+* {margin: 0; padding: 0;}
+
+body {font-family: arial; background-color: #2596be}
+
+#shopping-list {
+	margin-left: 2rem;
+	display: grid;
+	grid-gap: 2rem;
+}
+
+.main-header {margin-top: 1rem;}
+
+.input-container {}
+.input-container input {}
+
+
+.icon {width: 1.3rem; cursor: pointer}
+
+.strikeout {color: grey; font-style: italic}
+.priority {font-weight: bold}
+
+.main-list-item {
+	margin-top: 1rem;
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	background-color: #7cc0d8;
+	max-width: 20rem;
+	height: 2rem;
+	border-radius: 8px;
+	justify-content: space-between;
+}
+.main-list-item p {margin-left: 1rem;}
+.main-list-item--clickable-container {display: flex; gap: 1rem; margin-right: 1.5rem;}
